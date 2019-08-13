@@ -1,14 +1,26 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {
+  MatCardModule,
+  MatFormFieldModule,
+  MatListModule} from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
       ],
+      imports: [
+        MatCardModule,
+        MatFormFieldModule,
+        MatListModule,
+        ReactiveFormsModule
+      ]
     }).compileComponents();
   }));
+
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -16,16 +28,14 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'inez'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('inez');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to inez!');
+  describe('.addToCard()', () => {
+    it('should add the item given from the service', () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.debugElement.componentInstance;
+      // app.ngOnInit();
+      // expect(app.shoppingList.length).toBe(0);
+      // app.addToCard();
+      // expect(app.shoppingList.length).toBe(1);
+    });
   });
 });
