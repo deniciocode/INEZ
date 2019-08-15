@@ -38,5 +38,13 @@ describe('ShoppingItemService', () => {
         expect(returnedItem.toString()).toBe('2 Stueck Butter');
       });
     });
+
+    describe('when user input has incorect spelling', () => {
+      it('return the correct product', () => {
+        inputString = '3 Buter';
+        returnedItem = service.findBy(inputString);
+        expect(returnedItem.toString()).toBe('3 Stueck Butter');
+      });
+    });
   });
 });

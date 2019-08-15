@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import {ShoppingItem} from 'src/app/shopping-item';
-import {Product} from 'src/app/product';
+import { Product } from 'src/app/product';
+import { ShoppingItem } from 'src/app/shopping-item';
+import { stringSimilarity } from 'string-similarity-js';
 
 @Injectable({
   providedIn: 'root'
@@ -42,9 +43,23 @@ export class ShoppingItemService {
     // TODO product must allow wrong typings
     // Best way to do it is the count the matching letters
     // case sensitive should be allowed as well
+    console.log('Function Yes or no');
+    let highestMatch = 0;
+    let tmpMatch: number;
+    let productToReturn: Product;
+    console.log('Simimlar:', stringSimilarity('test', 'tast'));
+    for(let product of this.productList) {
+      tmpMatch = stringSimilarity(product.getDescription(), userText);
+      if (highestMatch < tmpMatch) {
+        highestMatch = tmpMatch;
+        productToReturn = product;
+      }
+      tmpMatch = 0;
+    }
+    return productToReturn;
 
-    return this.productList.find((product) => {
-      return userText.includes(product.getDescription());
-    });
+    // return this.productList.find((product) => {
+    //   return userText.includes(product.getDescription());
+    // });
   }
 }
