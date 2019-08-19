@@ -17,16 +17,10 @@ export class ShoppingItemService {
 
   public findBy(userText: string): ShoppingItem {
     if (userText === '') {
-      console.log('User text is empty:', userText);
       return null;
     }
     const amount = this.findAmountBy(userText);
     const product = this.findProductBy(userText);
-
-    console.log('User text:', userText);
-    console.log('Amount:', amount);
-    console.log('Product:', product);
-
     return new ShoppingItem(amount, product);
   }
 
@@ -40,15 +34,12 @@ export class ShoppingItemService {
   }
 
   private findProductBy(userText: string): Product {
-    // TODO product must allow wrong typings
-    // Best way to do it is the count the matching letters
-    // case sensitive should be allowed as well
-    console.log('Function Yes or no');
+    // TODO
+    // - synonyms
     let highestMatch = 0;
     let tmpMatch: number;
     let productToReturn: Product;
-    console.log('Simimlar:', stringSimilarity('test', 'tast'));
-    for(let product of this.productList) {
+    for (const product of this.productList) {
       tmpMatch = stringSimilarity(product.getDescription(), userText);
       if (highestMatch < tmpMatch) {
         highestMatch = tmpMatch;
@@ -57,9 +48,5 @@ export class ShoppingItemService {
       tmpMatch = 0;
     }
     return productToReturn;
-
-    // return this.productList.find((product) => {
-    //   return userText.includes(product.getDescription());
-    // });
   }
 }

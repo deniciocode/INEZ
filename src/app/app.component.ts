@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {ShoppingItemService} from 'src/app/shopping-item.service';
-import {ShoppingItem} from 'src/app/shopping-item';
+import { ShoppingItemService } from 'src/app/shopping-item.service';
+import { ShoppingItem } from 'src/app/shopping-item';
 
 @Component({
   selector: 'inez-root',
@@ -29,9 +29,19 @@ export class AppComponent implements OnInit {
     if (userText) {
       const shoppingItem = this.shoppingService.findBy(userText);
       if (shoppingItem) {
-        // TODO combine two same shoppingItems
-        this.shoppingList.push(shoppingItem);
+        this.handleNewShoppingItem(shoppingItem);
       }
+    }
+  }
+
+  private handleNewShoppingItem(shoppingItem: ShoppingItem): void {
+    let index = this.shoppingList.findIndex((item) => {
+      return item.hasSameProduct(shoppingItem);
+    });
+    if (index < 0) {
+      this.shoppingList.push(shoppingItem);
+    } else {
+      this.shoppingList[index] = this.shoppingList[index].concat(shoppingItem);
     }
   }
 }
