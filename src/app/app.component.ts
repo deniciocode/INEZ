@@ -21,6 +21,10 @@ export class AppComponent implements OnInit {
     this.shoppingForm = this.fb.group({
       item: ['', Validators.required]
     });
+    // this.shoppingForm.patchValue({item: 'Butter'})
+    // this.addToCard();
+    // this.shoppingForm.patchValue({item: 'Kartoffeln'})
+    // this.addToCard();
   }
 
   addToCard(): void {
@@ -29,13 +33,15 @@ export class AppComponent implements OnInit {
     if (userText) {
       const shoppingItem = this.shoppingService.findBy(userText);
       if (shoppingItem) {
+        console.log('I found something with:', userText);
+        console.log('The Item is:', shoppingItem);
         this.handleNewShoppingItem(shoppingItem);
       }
     }
   }
 
   private handleNewShoppingItem(shoppingItem: ShoppingItem): void {
-    let index = this.shoppingList.findIndex((item) => {
+    const index = this.shoppingList.findIndex((item) => {
       return item.hasSameProduct(shoppingItem);
     });
     if (index < 0) {
@@ -43,5 +49,12 @@ export class AppComponent implements OnInit {
     } else {
       this.shoppingList[index] = this.shoppingList[index].concat(shoppingItem);
     }
+  }
+
+  public deleteOnIndex(givenItem: ShoppingItem): void {
+    // TODO we need a confirmation
+    this.shoppingList = this.shoppingList.filter(
+      shoppingItem => shoppingItem !== givenItem
+    );
   }
 }

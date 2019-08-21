@@ -7,6 +7,8 @@ import { stringSimilarity } from 'string-similarity-js';
   providedIn: 'root'
 })
 export class ShoppingItemService {
+  private STRING_MATCH_LIMIT = 0.2;
+
   private productList: Product[] = [
     new Product(1, 'Butter', 'Stueck'),
     new Product(2, 'Milch', 'Liter'),
@@ -21,7 +23,11 @@ export class ShoppingItemService {
     }
     const amount = this.findAmountBy(userText);
     const product = this.findProductBy(userText);
-    return new ShoppingItem(amount, product);
+    if (amount && product) {
+      return new ShoppingItem(amount, product);
+    } else {
+      return null;
+    }
   }
 
   private findAmountBy(userText: string): number {
@@ -41,7 +47,7 @@ export class ShoppingItemService {
     let productToReturn: Product;
     for (const product of this.productList) {
       tmpMatch = stringSimilarity(product.getDescription(), userText);
-      if (highestMatch < tmpMatch) {
+      if (tmpMatch > this.STRING_MATCH_LIMIT && highestMatch < tmpMatch) {
         highestMatch = tmpMatch;
         productToReturn = product;
       }

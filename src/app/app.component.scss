@@ -1,0 +1,9 @@
+.done {
+  text-decoration: line-through;
+}
+
+.item-actions {
+  :first-child {
+    margin-right: 5px;
+  }
+}

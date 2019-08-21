@@ -4,6 +4,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -13,13 +16,15 @@ describe('AppComponent', () => {
       ],
       imports: [
         MatCardModule,
+        MatCheckboxModule,
+        MatToolbarModule,
         MatFormFieldModule,
         MatListModule,
+        MatIconModule,
         ReactiveFormsModule
       ]
     }).compileComponents();
   }));
-
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);

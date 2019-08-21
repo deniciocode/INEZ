@@ -12,8 +12,8 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$inez-primary: mat-palette($mat-blue, A700);
-$inez-accent: mat-palette($mat-yellow, A500);
+$inez-primary: mat-palette($mat-blue, A400);
+$inez-accent: mat-palette($mat-yellow, 500);
 
 // The warn palette is optional (defaults to red).
 $inez-warn: mat-palette($mat-red);
@@ -29,4 +29,27 @@ $inez-theme: mat-light-theme($inez-primary, $inez-accent, $inez-warn);
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 20px; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.shopping-card {
+  max-width: 800px;
+  // color: #ffffff;
+  // background: mat-color($inez-primary);
+  // .shopping-card-content {
+  //   background-color: white;
+  // }
+}
+
+.form-field {
+  width: 100%;
+}
+
+.mat-list-item-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-button {
+  margin-left: 5px;
+}
+

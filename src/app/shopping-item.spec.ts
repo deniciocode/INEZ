@@ -58,4 +58,26 @@ describe('ShoppingItem', () => {
       });
     });
   });
+
+  describe('#onePlus()', () => {
+    it('increased the amount by 1', () => {
+      shoppingItem.onePlus();
+      expect(shoppingItem.getAmount()).toEqual(givenAmount + 1);
+    });
+  });
+
+  describe('#onePlus()', () => {
+    it('decreases the amount by 1', () => {
+      shoppingItem.oneMinus();
+      expect(shoppingItem.getAmount()).toEqual(givenAmount - 1);
+    });
+
+    describe('when amount is 0', () => {
+      it('does not descrease the number', () => {
+        shoppingItem = new ShoppingItem(0, product);
+        shoppingItem.oneMinus();
+        expect(shoppingItem.getAmount()).toEqual(0);
+      });
+    });
+  });
 });

@@ -46,5 +46,21 @@ describe('ShoppingItemService', () => {
         expect(returnedItem.toString()).toBe('3 Stueck Butter');
       });
     });
+
+    describe('when user input does only contain a number', () => {
+      it('return the correct product', () => {
+        inputString = '3';
+        returnedItem = service.findBy(inputString);
+        expect(returnedItem).toBeNull();
+      });
+    });
+
+    describe('when user input makes no sense', () => {
+      it('return the correct product', () => {
+        inputString = 'ffffffadfasdfasfawefadcvsfgadfasfsdgfasfd'
+        returnedItem = service.findBy(inputString);
+        expect(returnedItem).toBeNull();
+      });
+    });
   });
 });
