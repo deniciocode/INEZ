@@ -12,7 +12,17 @@ export class ShoppingItemService {
   private productList: Product[] = [
     new Product(1, 'Butter', 'Stueck'),
     new Product(2, 'Milch', 'Liter'),
-    new Product(3, 'Kartoffeln', 'Kg')
+    new Product(3, 'Kartoffeln', 'Kg'),
+    new Product(4, 'Karotten', 'Kg', [
+      'Möhren'
+    ]),
+    new Product(4, 'Brötchen', '', [
+      'Schrippe',
+      'Semmel'
+    ]),
+    new Product(4, 'Brot', '', [
+      'Stulle'
+    ])
   ];
 
   constructor() { }
@@ -40,13 +50,11 @@ export class ShoppingItemService {
   }
 
   private findProductBy(userText: string): Product {
-    // TODO
-    // - synonyms
     let highestMatch = 0;
     let tmpMatch: number;
     let productToReturn: Product;
     for (const product of this.productList) {
-      tmpMatch = stringSimilarity(product.getDescription(), userText);
+      tmpMatch = this.highestStringMatch(product, userText)
       if (tmpMatch > this.STRING_MATCH_LIMIT && highestMatch < tmpMatch) {
         highestMatch = tmpMatch;
         productToReturn = product;
@@ -54,5 +62,15 @@ export class ShoppingItemService {
       tmpMatch = 0;
     }
     return productToReturn;
+  }
+
+  private highestStringMatch(product: Product, userText: string): number {
+    let productMatch = stringSimilarity(product.getDescription(), userText);
+    let synonymMatch: number;
+    for (const synonym of product.getSynonyms()) {
+      synonymMatch = stringSimilarity(synonym, userText);
+      if (productMatch < synonymMatch) { productMatch = synonymMatch; }
+    }
+    return productMatch;
   }
 }

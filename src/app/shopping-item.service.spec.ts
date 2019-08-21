@@ -56,10 +56,18 @@ describe('ShoppingItemService', () => {
     });
 
     describe('when user input makes no sense', () => {
-      it('return the correct product', () => {
-        inputString = 'ffffffadfasdfasfawefadcvsfgadfasfsdgfasfd'
+      it('should be null', () => {
+        inputString = 'ffffffadfasdfasfawefadcvsfgadfasfsdgfasfd';
         returnedItem = service.findBy(inputString);
         expect(returnedItem).toBeNull();
+      });
+    });
+
+    describe('when user input contains synonyms', () => {
+      it('should return the correct product', () => {
+        inputString = 'Schrippe';
+        returnedItem = service.findBy(inputString);
+        expect(returnedItem.toString()).toBe('1 Stueck Brötchen');
       });
     });
   });

@@ -13,4 +13,8 @@ export class Product {
   public getDescription(): string {
     return this.describtion;
   }
+
+  public getSynonyms(): string[] {
+    return this.synonyms;
+  }
 }
