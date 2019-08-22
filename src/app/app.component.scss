@@ -2,6 +2,11 @@
   text-decoration: line-through;
 }
 
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
 .item-actions {
   :first-child {
     margin-right: 5px;

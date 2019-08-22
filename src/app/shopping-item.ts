@@ -7,6 +7,12 @@ export class ShoppingItem {
     this.checked = false;
   }
 
+  static fromObject(shoppingItemObject: Object): ShoppingItem {
+    let product = Product.fromObject(shoppingItemObject['product']);
+    let amount = shoppingItemObject['amount'];
+    return new ShoppingItem(amount, product);
+  }
+
   public getAmount(): number {
     return this.amount;
   }

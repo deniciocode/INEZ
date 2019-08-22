@@ -10,6 +10,15 @@ export class Product {
     return `${this.messurement} ${this.describtion}`
   }
 
+  static fromObject(productObject: Object): Product {
+    return new Product(
+      productObject['id'],
+      productObject['describtion'],
+      productObject['messurement'],
+      productObject['synonyms']
+    )
+  }
+
   public getDescription(): string {
     return this.describtion;
   }

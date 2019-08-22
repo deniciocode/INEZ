@@ -1,10 +1,17 @@
-<mat-toolbar color="primary">INEZ - Mein Einkauf</mat-toolbar>
-<form [formGroup]='shoppingForm' (ngSubmit)='addToCard()'>
-  <mat-form-field class='form-field'>
-    <input id='user-input' matInput
-           type=text
-           placeholder="+ Add to list"
-           formControlName='item'>
+<mat-toolbar color="primary">
+  <mat-toolbar-row class='toolbar'>
+    <span>
+      INEZ - Mein Einkauf
+    </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<form [formGroup]='shoppingForm' (ngSubmit)='addToCard()' >
+  <mat-form-field class='form-field' appearance="outline">
+    <mat-label>Einkauf</mat-label>
+  <input id='user-input' matInput
+         type=text
+         placeholder="+ Add to list"
+         formControlName='item'>
   </mat-form-field>
 </form>
 
@@ -22,19 +29,19 @@
     <span class='item-actions'>
       <button mat-icon-button color='secondary'
               *ngIf='item.getAmount() > 1; else deleteButton'
-              (click)='item.oneMinus()'>
+              (click)='decreaseAmount(item)'>
         <mat-icon>remove</mat-icon>
       </button>
 
       <ng-template #deleteButton>
         <button mat-icon-button color='warn'
-                (click)='deleteOnIndex(item)'>
+                (click)='deleteItem(item)'>
           <mat-icon>delete</mat-icon>
         </button>
       </ng-template>
 
       <button mat-icon-button
-              (click)='item.onePlus()'
+              (click)='increaseAmount(item)'
               class='add-button'
               color='primary'>
         <mat-icon>add</mat-icon>

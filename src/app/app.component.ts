@@ -11,20 +11,35 @@ import { ShoppingItem } from 'src/app/shopping-item';
 export class AppComponent implements OnInit {
   shoppingForm: FormGroup;
   shoppingList: ShoppingItem[] = [];
+  private STORE_KEY = 'my-super-shopping-list';
 
   constructor(
     private fb: FormBuilder,
     private shoppingService: ShoppingItemService
   ) {}
 
+  // TODO detect changes and show the save button
   ngOnInit(): void {
     this.shoppingForm = this.fb.group({
       item: ['', Validators.required]
     });
-    // this.shoppingForm.patchValue({item: 'Butter'})
-    // this.addToCard();
-    // this.shoppingForm.patchValue({item: 'Kartoffeln'})
-    // this.addToCard();
+    if (localStorage.length > 0) {
+      const stringyfied = localStorage.getItem(this.STORE_KEY);
+      const shoppingList = JSON.parse(stringyfied) as ShoppingItem[];
+      for (const item of shoppingList) {
+        const shoppingItem = ShoppingItem.fromObject(item);
+        this.shoppingList.push(shoppingItem);
+      }
+    }
+  }
+
+  storeItems(): void {
+    console.log('Storing Items');
+    if (this.shoppingList.length > 0) {
+      const stringyfied = JSON.stringify(this.shoppingList);
+      localStorage.setItem(this.STORE_KEY, stringyfied);
+      console.log('We have items to store');
+    }
   }
 
   addToCard(): void {
@@ -38,12 +53,11 @@ export class AppComponent implements OnInit {
         this.handleNewShoppingItem(shoppingItem);
       }
     }
+    this.storeItems();
   }
 
   private handleNewShoppingItem(shoppingItem: ShoppingItem): void {
-    const index = this.shoppingList.findIndex((item) => {
-      return item.hasSameProduct(shoppingItem);
-    });
+    const index = this.indexFor(shoppingItem);
     if (index < 0) {
       this.shoppingList.push(shoppingItem);
     } else {
@@ -51,10 +65,27 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public deleteOnIndex(givenItem: ShoppingItem): void {
+  private indexFor(shoppingItem: ShoppingItem): number {
+    return this.shoppingList.findIndex((item) => {
+      return item.hasSameProduct(shoppingItem);
+    });
+  }
+
+  public deleteItem(givenItem: ShoppingItem): void {
     // TODO we need a confirmation
     this.shoppingList = this.shoppingList.filter(
       shoppingItem => shoppingItem !== givenItem
     );
+    this.storeItems();
+  }
+
+  public increaseAmount(item: ShoppingItem): void {
+    item.onePlus();
+    this.storeItems();
+  }
+
+  public decreaseAmount(item: ShoppingItem): void {
+    item.oneMinus();
+    this.storeItems();
   }
 }
