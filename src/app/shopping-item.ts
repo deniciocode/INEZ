@@ -8,8 +8,8 @@ export class ShoppingItem {
   }
 
   static fromObject(shoppingItemObject: Object): ShoppingItem {
-    let product = Product.fromObject(shoppingItemObject['product']);
-    let amount = shoppingItemObject['amount'];
+    const product = Product.fromObject(shoppingItemObject['product']);
+    const amount = shoppingItemObject['amount'];
     return new ShoppingItem(amount, product);
   }
 

@@ -1,10 +1,9 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row class='toolbar'>
-    <span>
-      INEZ - Mein Einkauf
-    </span>
-  </mat-toolbar-row>
+  <span>
+    INEZ - Mein Einkauf
+  </span>
 </mat-toolbar>
+
 <form [formGroup]='shoppingForm' (ngSubmit)='addToCard()' >
   <mat-form-field class='form-field' appearance="outline">
     <mat-label>Einkauf</mat-label>

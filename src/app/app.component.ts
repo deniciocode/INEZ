@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ShoppingItemService } from 'src/app/shopping-item.service';
 import { ShoppingItem } from 'src/app/shopping-item';
+import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'inez-root',
@@ -15,41 +17,39 @@ export class AppComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private shoppingService: ShoppingItemService
+    private shoppingService: ShoppingItemService,
+    private dialog: MatDialog
   ) {}
 
-  // TODO detect changes and show the save button
   ngOnInit(): void {
     this.shoppingForm = this.fb.group({
       item: ['', Validators.required]
     });
     if (localStorage.length > 0) {
-      const stringyfied = localStorage.getItem(this.STORE_KEY);
-      const shoppingList = JSON.parse(stringyfied) as ShoppingItem[];
-      for (const item of shoppingList) {
-        const shoppingItem = ShoppingItem.fromObject(item);
-        this.shoppingList.push(shoppingItem);
-      }
+      this.restoreFromLocalStorage();
     }
   }
 
-  storeItems(): void {
-    console.log('Storing Items');
-    if (this.shoppingList.length > 0) {
-      const stringyfied = JSON.stringify(this.shoppingList);
-      localStorage.setItem(this.STORE_KEY, stringyfied);
-      console.log('We have items to store');
+  private restoreFromLocalStorage(): void {
+    const stringyfied = localStorage.getItem(this.STORE_KEY);
+    const shoppingList = JSON.parse(stringyfied) as ShoppingItem[];
+    for (const item of shoppingList) {
+      const shoppingItem = ShoppingItem.fromObject(item);
+      this.shoppingList.push(shoppingItem);
     }
   }
 
-  addToCard(): void {
+  public storeItems(): void {
+    const stringyfied = JSON.stringify(this.shoppingList);
+    localStorage.setItem(this.STORE_KEY, stringyfied);
+  }
+
+  public addToCard(): void {
     const userText: string  = this.shoppingForm.get('item').value;
     this.shoppingForm.reset();
     if (userText) {
       const shoppingItem = this.shoppingService.findBy(userText);
       if (shoppingItem) {
-        console.log('I found something with:', userText);
-        console.log('The Item is:', shoppingItem);
         this.handleNewShoppingItem(shoppingItem);
       }
     }
@@ -72,11 +72,18 @@ export class AppComponent implements OnInit {
   }
 
   public deleteItem(givenItem: ShoppingItem): void {
-    // TODO we need a confirmation
-    this.shoppingList = this.shoppingList.filter(
-      shoppingItem => shoppingItem !== givenItem
-    );
-    this.storeItems();
+    const dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      width: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe(shouldBeDeleted => {
+      if (shouldBeDeleted) {
+        this.shoppingList = this.shoppingList.filter(
+          shoppingItem => shoppingItem !== givenItem
+        );
+      }
+      this.storeItems();
+    });
   }
 
   public increaseAmount(item: ShoppingItem): void {

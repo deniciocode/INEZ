@@ -16,13 +16,10 @@ export class ShoppingItemService {
     new Product(4, 'Karotten', 'Kg', [
       'Möhren'
     ]),
-    new Product(4, 'Brötchen', '', [
+    new Product(5, 'Brötchen', '', [
       'Schrippe',
       'Semmel'
     ]),
-    new Product(4, 'Brot', '', [
-      'Stulle'
-    ])
   ];
 
   constructor() { }
@@ -54,7 +51,7 @@ export class ShoppingItemService {
     let tmpMatch: number;
     let productToReturn: Product;
     for (const product of this.productList) {
-      tmpMatch = this.highestStringMatch(product, userText)
+      tmpMatch = this.highestStringMatch(product, userText);
       if (tmpMatch > this.STRING_MATCH_LIMIT && highestMatch < tmpMatch) {
         highestMatch = tmpMatch;
         productToReturn = product;
