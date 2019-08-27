@@ -1,4 +1,4 @@
-export class Product {
+export class Food {
   constructor(
     private id: number,
     private describtion: string,
@@ -7,11 +7,14 @@ export class Product {
   ) {}
 
   public toString(): string {
+    if (this.messurement === '' || this.messurement === undefined) {
+      return this.describtion;
+    }
     return `${this.messurement} ${this.describtion}`
   }
 
-  static fromObject(productObject: Object): Product {
-    return new Product(
+  static fromObject(productObject: Object): Food {
+    return new Food(
       productObject['id'],
       productObject['describtion'],
       productObject['messurement'],

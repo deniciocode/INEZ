@@ -1,12 +1,12 @@
-import { Product } from './product';
+import { Food } from './food';
 
 describe('Product', () => {
-  let product: Product;
+  let product: Food;
   let describtion = 'Milch';
   let messurement = 'Liter';
 
   beforeEach(() => {
-    product = new Product(4, describtion, messurement);
+    product = new Food(4, describtion, messurement);
   });
 
   it('should create an instance', () => {

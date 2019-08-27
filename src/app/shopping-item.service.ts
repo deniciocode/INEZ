@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Product } from 'src/app/product';
+import { Food } from 'src/app/food';
 import { ShoppingItem } from 'src/app/shopping-item';
 import { stringSimilarity } from 'string-similarity-js';
 
@@ -9,14 +9,14 @@ import { stringSimilarity } from 'string-similarity-js';
 export class ShoppingItemService {
   private STRING_MATCH_LIMIT = 0.2;
 
-  private productList: Product[] = [
-    new Product(1, 'Butter', 'Stueck'),
-    new Product(2, 'Milch', 'Liter'),
-    new Product(3, 'Kartoffeln', 'Kg'),
-    new Product(4, 'Karotten', 'Kg', [
+  private foodList: Food[] = [
+    new Food(1, 'Butter', 'Stueck'),
+    new Food(2, 'Milch', 'Liter'),
+    new Food(3, 'Kartoffeln', 'Kg'),
+    new Food(4, 'Karotten', 'Kg', [
       'Möhren'
     ]),
-    new Product(5, 'Brötchen', '', [
+    new Food(5, 'Brötchen', '', [
       'Schrippe',
       'Semmel'
     ]),
@@ -29,9 +29,9 @@ export class ShoppingItemService {
       return null;
     }
     const amount = this.findAmountBy(userText);
-    const product = this.findProductBy(userText);
-    if (amount && product) {
-      return new ShoppingItem(amount, product);
+    const food = this.findFoodBy(userText);
+    if (amount && food) {
+      return new ShoppingItem(amount, food);
     } else {
       return null;
     }
@@ -46,28 +46,28 @@ export class ShoppingItemService {
     }
   }
 
-  private findProductBy(userText: string): Product {
+  private findFoodBy(userText: string): Food {
     let highestMatch = 0;
     let tmpMatch: number;
-    let productToReturn: Product;
-    for (const product of this.productList) {
-      tmpMatch = this.highestStringMatch(product, userText);
+    let foundFood: Food;
+    for (const food of this.foodList) {
+      tmpMatch = this.highestStringMatch(food, userText);
       if (tmpMatch > this.STRING_MATCH_LIMIT && highestMatch < tmpMatch) {
         highestMatch = tmpMatch;
-        productToReturn = product;
+        foundFood = food;
       }
       tmpMatch = 0;
     }
-    return productToReturn;
+    return foundFood;
   }
 
-  private highestStringMatch(product: Product, userText: string): number {
-    let productMatch = stringSimilarity(product.getDescription(), userText);
+  private highestStringMatch(food: Food, userText: string): number {
+    let foodMatch = stringSimilarity(food.getDescription(), userText);
     let synonymMatch: number;
-    for (const synonym of product.getSynonyms()) {
+    for (const synonym of food.getSynonyms()) {
       synonymMatch = stringSimilarity(synonym, userText);
-      if (productMatch < synonymMatch) { productMatch = synonymMatch; }
+      if (foodMatch < synonymMatch) { foodMatch = synonymMatch; }
     }
-    return productMatch;
+    return foodMatch;
   }
 }

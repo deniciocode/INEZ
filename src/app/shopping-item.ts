@@ -1,16 +1,18 @@
-import { Product } from 'src/app/product';
+import { Food } from 'src/app/food';
 
 export class ShoppingItem {
   private checked: boolean;
+  private productAttached: boolean;
 
-  constructor(private amount: number, private product: Product) {
+  constructor(private amount: number, private food: Food) {
     this.checked = false;
+    this.productAttached = false;
   }
 
   static fromObject(shoppingItemObject: Object): ShoppingItem {
-    const product = Product.fromObject(shoppingItemObject['product']);
+    const food = Food.fromObject(shoppingItemObject['food']);
     const amount = shoppingItemObject['amount'];
-    return new ShoppingItem(amount, product);
+    return new ShoppingItem(amount, food);
   }
 
   public getAmount(): number {
@@ -26,31 +28,29 @@ export class ShoppingItem {
   }
 
   public toString(): string {
-    return `${this.amount} ${this.product.toString()}`
+    return `${this.amount} ${this.food.toString()}`
   }
 
   public onePlus() {
-    console.log('Increasing Amount of -', this.getProductDescription())
     this.amount++;
   }
 
   public oneMinus() {
-    console.log('Decreasing Amount of -', this.getProductDescription())
     if (this.amount > 0) {
       this.amount--;
     }
   }
 
-  public hasSameProduct(otherItem: ShoppingItem): boolean {
-    return this.getProductDescription() === otherItem.getProductDescription();
+  public hasSameFood(otherItem: ShoppingItem): boolean {
+    return this.getFoodDescription() === otherItem.getFoodDescription();
   }
 
-  private getProductDescription(): string {
-    return this.product.getDescription();
+  private getFoodDescription(): string {
+    return this.food.getDescription();
   }
 
   public concat(otherItem: ShoppingItem): ShoppingItem {
     const concatAmount = this.amount + otherItem.amount;
-    return new ShoppingItem(concatAmount, this.product);
+    return new ShoppingItem(concatAmount, this.food);
   }
 }

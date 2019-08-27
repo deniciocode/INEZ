@@ -67,7 +67,7 @@ describe('ShoppingItemService', () => {
       it('should return the correct product', () => {
         inputString = 'Schrippe';
         returnedItem = service.findBy(inputString);
-        expect(returnedItem.toString()).toBe('1 Stueck Brötchen');
+        expect(returnedItem.toString()).toBe('1 Brötchen');
       });
     });
   });

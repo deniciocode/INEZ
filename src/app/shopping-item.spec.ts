@@ -1,16 +1,16 @@
 import { ShoppingItem } from './shopping-item';
-import { Product } from 'src/app/product';
+import { Food } from 'src/app/food';
 
 describe('ShoppingItem', () => {
   let shoppingItem: ShoppingItem;
-  let product: Product;
-  let product2: Product;
+  let food: Food;
+  let food2: Food;
   const givenAmount = 2;
 
   beforeEach(() => {
-    product = new Product(4, 'Kartoffeln', 'kg');
-    product2 = new Product(1, 'Butter', 'kg');
-    shoppingItem = new ShoppingItem(givenAmount, product);
+    food = new Food(4, 'Kartoffeln', 'kg');
+    food2 = new Food(1, 'Butter', 'kg');
+    shoppingItem = new ShoppingItem(givenAmount, food);
   });
 
   it('should create an instance', () => {
@@ -27,33 +27,33 @@ describe('ShoppingItem', () => {
     let otherShoppingItem: ShoppingItem;
 
     it('should return a ShoppingItem', () => {
-      otherShoppingItem = new ShoppingItem(2, product)
+      otherShoppingItem = new ShoppingItem(2, food)
       expect(shoppingItem.concat(otherShoppingItem))
         .toEqual(jasmine.any(ShoppingItem));
     });
 
-    describe('when products are the same', () => {
+    describe('when foods are the same', () => {
       it('should concatinate the amount', () => {
         let newAmount = 3;
-        let otherShoppingItem = new ShoppingItem(newAmount, product);
+        let otherShoppingItem = new ShoppingItem(newAmount, food);
         const resultItem = shoppingItem.concat(otherShoppingItem);
         expect(resultItem.getAmount()).toEqual(newAmount + givenAmount)
       });
     });
   });
 
-  describe('#hasSameProduct', () => {
-    describe('when product is the same', () => {
+  describe('#hasSameFood', () => {
+    describe('when food is the same', () => {
       it('should return true', () => {
-        const isSame = shoppingItem.hasSameProduct(shoppingItem);
+        const isSame = shoppingItem.hasSameFood(shoppingItem);
         expect(isSame).toEqual(true);
       });
     });
 
-    describe('when product differs', () => {
+    describe('when food differs', () => {
       it('should return false', () => {
-        let otherShoppingItem = new ShoppingItem(2, product2);
-        const isSame = shoppingItem.hasSameProduct(otherShoppingItem);
+        let otherShoppingItem = new ShoppingItem(2, food2);
+        const isSame = shoppingItem.hasSameFood(otherShoppingItem);
         expect(isSame).toEqual(false);
       });
     });
@@ -74,7 +74,7 @@ describe('ShoppingItem', () => {
 
     describe('when amount is 0', () => {
       it('does not descrease the number', () => {
-        shoppingItem = new ShoppingItem(0, product);
+        shoppingItem = new ShoppingItem(0, food);
         shoppingItem.oneMinus();
         expect(shoppingItem.getAmount()).toEqual(0);
       });

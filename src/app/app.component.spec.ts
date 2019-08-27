@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatDialogModule} from '@angular/material/dialog';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -15,6 +16,7 @@ describe('AppComponent', () => {
         AppComponent,
       ],
       imports: [
+        MatDialogModule,
         MatCardModule,
         MatCheckboxModule,
         MatToolbarModule,
@@ -25,6 +27,13 @@ describe('AppComponent', () => {
       ]
     }).compileComponents();
   }));
+
+  beforeEach(() => {
+    // TODO localStorage should be removed or the logic for the shopping card
+    // should be extracted
+    // it is hard to test
+    localStorage.clear();
+  });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);

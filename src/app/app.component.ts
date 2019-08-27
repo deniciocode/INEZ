@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ShoppingItemService } from 'src/app/shopping-item.service';
 import { ShoppingItem } from 'src/app/shopping-item';
-import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
+import {
+  DeleteConfirmationComponent
+} from 'src/app/delete-confirmation/delete-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -67,7 +69,7 @@ export class AppComponent implements OnInit {
 
   private indexFor(shoppingItem: ShoppingItem): number {
     return this.shoppingList.findIndex((item) => {
-      return item.hasSameProduct(shoppingItem);
+      return item.hasSameFood(shoppingItem);
     });
   }
 
@@ -75,7 +77,6 @@ export class AppComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       width: '250px',
     });
-
     dialogRef.afterClosed().subscribe(shouldBeDeleted => {
       if (shouldBeDeleted) {
         this.shoppingList = this.shoppingList.filter(
