@@ -6,7 +6,7 @@
 
 <form [formGroup]='shoppingForm' (ngSubmit)='addToCard()' >
   <mat-form-field class='form-field' appearance="outline">
-    <mat-label>Einkauf</mat-label>
+    <mat-label>Einkaufwunsch</mat-label>
   <input id='user-input' matInput
          type=text
          placeholder="+ Add to list"
@@ -25,7 +25,7 @@
       </mat-checkbox>
     </span>
 
-    <span class='item-actions'>
+    <span class='item-actions' *ngIf='!item.getChecked()'>
       <button mat-icon-button color='secondary'
               *ngIf='item.getAmount() > 1; else deleteButton'
               (click)='decreaseAmount(item)'>
