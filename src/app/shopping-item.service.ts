@@ -18,6 +18,8 @@ export class ShoppingItemService {
     ]),
     new Food(5, 'Brötchen', '', [
       'Schrippe',
+      'Brotchen',
+      'Broetchen',
       'Semmel'
     ]),
   ];
