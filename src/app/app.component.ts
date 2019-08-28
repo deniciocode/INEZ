@@ -6,6 +6,7 @@ import {
   DeleteConfirmationComponent
 } from 'src/app/delete-confirmation/delete-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
+import {LocalStorageService} from 'src/app/local-storage.service';
 
 @Component({
   selector: 'inez-root',
@@ -15,12 +16,12 @@ import { MatDialog } from '@angular/material/dialog';
 export class AppComponent implements OnInit {
   shoppingForm: FormGroup;
   shoppingList: ShoppingItem[] = [];
-  private STORE_KEY = 'my-super-shopping-list';
 
   constructor(
     private fb: FormBuilder,
     private shoppingService: ShoppingItemService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private storageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
@@ -28,22 +29,8 @@ export class AppComponent implements OnInit {
       item: ['', Validators.required]
     });
     if (localStorage.length > 0) {
-      this.restoreFromLocalStorage();
+      this.shoppingList = this.storageService.restoreFromLocalStorage();
     }
-  }
-
-  private restoreFromLocalStorage(): void {
-    const stringyfied = localStorage.getItem(this.STORE_KEY);
-    const shoppingList = JSON.parse(stringyfied) as ShoppingItem[];
-    for (const item of shoppingList) {
-      const shoppingItem = ShoppingItem.fromObject(item);
-      this.shoppingList.push(shoppingItem);
-    }
-  }
-
-  public storeItems(): void {
-    const stringyfied = JSON.stringify(this.shoppingList);
-    localStorage.setItem(this.STORE_KEY, stringyfied);
   }
 
   public addToCard(): void {
@@ -55,7 +42,7 @@ export class AppComponent implements OnInit {
         this.handleNewShoppingItem(shoppingItem);
       }
     }
-    this.storeItems();
+    this.storageService.storeItems(this.shoppingList);
   }
 
   private handleNewShoppingItem(shoppingItem: ShoppingItem): void {
@@ -83,17 +70,17 @@ export class AppComponent implements OnInit {
           shoppingItem => shoppingItem !== givenItem
         );
       }
-      this.storeItems();
+      this.storageService.storeItems(this.shoppingList);
     });
   }
 
   public increaseAmount(item: ShoppingItem): void {
     item.onePlus();
-    this.storeItems();
+    this.storageService.storeItems(this.shoppingList);
   }
 
   public decreaseAmount(item: ShoppingItem): void {
     item.oneMinus();
-    this.storeItems();
+    this.storageService.storeItems(this.shoppingList);
   }
 }
