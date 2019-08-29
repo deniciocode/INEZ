@@ -10,6 +10,7 @@ import {Product} from 'src/app/product';
   styleUrls: ['./product-suggestions.component.scss']
 })
 export class ProductSuggestionsComponent implements OnInit {
+  productSuggestions: Product[];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public shoppingItem: ShoppingItem,
@@ -17,11 +18,9 @@ export class ProductSuggestionsComponent implements OnInit {
     private productService: ProductService
   ) {}
 
-  ngOnInit() {}
-
-  public productSuggestions(): Product[] {
+  ngOnInit() {
     const foodId = this.shoppingItem.getFoodId();
-    return this.productService.getProductsFor(foodId);
+    this.productSuggestions = this.productService.getProductsFor(foodId);
   }
 
   public pick(product: Product): void {

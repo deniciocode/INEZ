@@ -1,6 +1,10 @@
 <p>Product Auswahl</p>
 <mat-action-list>
-  <button mat-list-item *ngFor='let product of productSuggestions()'
+  <h3 *ngIf='productSuggestions.length === 0'>
+    Leider keine Produkte vorhanden.
+  </h3>
+
+  <button mat-list-item *ngFor='let product of productSuggestions'
           (click)='pick(product)'>
     <h3 matLine> {{ product }} </h3>
     <p matLine>
