@@ -1,8 +1,9 @@
 import { Food } from 'src/app/food';
+import {Product} from 'src/app/product';
 
 export class ShoppingItem {
   private checked: boolean;
-  private productAttached: boolean;
+  private attachedProduct: Product;
 
   static fromObject(shoppingItemObject: Object): ShoppingItem {
     const food = Food.fromObject(shoppingItemObject['food']);
@@ -12,7 +13,6 @@ export class ShoppingItem {
 
   constructor(private amount: number, private food: Food) {
     this.checked = false;
-    this.productAttached = false;
   }
 
   public getAmount(): number {
@@ -32,7 +32,11 @@ export class ShoppingItem {
   }
 
   public toString(): string {
-    return `${this.amount} ${this.food.toString()}`
+    if (this.hasProductAttached()) {
+      return `${this.amount} ${this.attachedProduct.toString()}`
+    } else {
+      return `${this.amount} ${this.food.toString()}`
+    }
   }
 
   public onePlus() {
@@ -49,16 +53,19 @@ export class ShoppingItem {
     return this.getFoodDescription() === otherItem.getFoodDescription();
   }
 
+  public attach(product: Product): void {
+    this.attachedProduct = product;
+  }
+
   public hasProductAttached(): boolean {
-    return this.productAttached;
+    return this.attachedProduct !== undefined;
   }
 
   private getFoodDescription(): string {
     return this.food.getDescription();
   }
 
-  public concat(otherItem: ShoppingItem): ShoppingItem {
-    const concatAmount = this.amount + otherItem.amount;
-    return new ShoppingItem(concatAmount, this.food);
+  public concat(otherItem: ShoppingItem) {
+    this.amount += otherItem.amount;
   }
 }

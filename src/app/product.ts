@@ -9,7 +9,11 @@ export class Product {
     return this.foodId;
   }
 
+  public getPrice(): number {
+    return this.price;
+  }
+
   public toString(): string {
-    return `${this.brandName} ${this.description}`
+    return `${this.brandName} ${this.description}`;
   }
 }

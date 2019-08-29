@@ -1,0 +1,10 @@
+<p>Product Auswahl</p>
+<mat-action-list>
+  <button mat-list-item *ngFor='let product of productSuggestions()'
+          (click)='pick(product)'>
+    <h3 matLine> {{ product }} </h3>
+    <p matLine>
+      {{ product.getPrice() | currency:'EUR':'symbol' }}
+    </p>
+  </button>
+</mat-action-list>

@@ -2,23 +2,26 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatListModule } from '@angular/material/list';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppComponent } from './app.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
+import { AppComponent } from './app.component';
+import { ProductSuggestionsComponent } from './product-suggestions/product-suggestions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DeleteConfirmationComponent
+    DeleteConfirmationComponent,
+    ProductSuggestionsComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +29,7 @@ import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
+    MatExpansionModule,
     MatDialogModule,
     MatDividerModule,
     MatFormFieldModule,
@@ -36,7 +40,8 @@ import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-
     ReactiveFormsModule
   ],
   entryComponents: [
-    DeleteConfirmationComponent
+    DeleteConfirmationComponent,
+    ProductSuggestionsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

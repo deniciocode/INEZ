@@ -1,7 +1,4 @@
-import { TestBed } from '@angular/core/testing';
-
 import { ProductService } from './product.service';
-import {Food} from 'src/app/food';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -11,7 +8,7 @@ describe('ProductService', () => {
   });
 
   describe('#getProductsFor()', () => {
-    it('return the product with the same id', () => {
+    it('returns the product with the same id', () => {
       const foodId = 3;
       const foundProducts = service.getProductsFor(foodId);
       for (const foundProduct of foundProducts) {
@@ -25,6 +22,6 @@ describe('ProductService', () => {
         const foundProducts = service.getProductsFor(nonsenseId);
         expect(foundProducts.length).toEqual(0);
       });
-    })
+    });
   });
 });

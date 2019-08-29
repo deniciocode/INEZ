@@ -23,13 +23,12 @@
       </mat-checkbox>
     </span>
 
-    <span class='product-suggestions'>
-      <ul>
-        <li *ngFor='let product of showSuggestions(item)'>{{ product }}</li>
-      </ul>
-    </span>
-
     <span class='item-actions' *ngIf='!item.getChecked()'>
+      <button mat-icon-button (click)='showSuggestions(item)'
+        *ngIf='!item.hasProductAttached()'>
+        <mat-icon>find_in_page</mat-icon>
+      </button>
+
       <button mat-icon-button color='secondary'
               *ngIf='item.getAmount() > 1; else deleteButton'
               (click)='decreaseAmount(item)'>

@@ -1,5 +1,6 @@
 import { ShoppingItem } from './shopping-item';
 import { Food } from 'src/app/food';
+import {Product} from 'src/app/product';
 
 describe('ShoppingItem', () => {
   let shoppingItem: ShoppingItem;
@@ -19,7 +20,17 @@ describe('ShoppingItem', () => {
 
   describe('.toString()', () => {
     it('should start with the amount', () => {
-      expect(shoppingItem.toString()).toBe('2 kg Kartoffeln')
+      expect(shoppingItem.toString()).toBe('2 kg Kartoffeln');
+    });
+
+    describe('when product was attached', () => {
+      it('should contain the product description', () => {
+        let product = new Product(
+          'Brandname', 'ProductDescription', 4.44, food.getId()
+        );
+        shoppingItem.attach(product)
+        expect(shoppingItem.toString()).toContain(product.toString());
+      });
     });
   });
 
@@ -37,7 +48,7 @@ describe('ShoppingItem', () => {
         let newAmount = 3;
         let otherShoppingItem = new ShoppingItem(newAmount, food);
         const resultItem = shoppingItem.concat(otherShoppingItem);
-        expect(resultItem.getAmount()).toEqual(newAmount + givenAmount)
+        expect(resultItem.getAmount()).toEqual(newAmount + givenAmount);
       });
     });
   });

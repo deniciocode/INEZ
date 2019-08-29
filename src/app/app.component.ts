@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
 import { LocalStorageService } from 'src/app/local-storage.service';
-import { Product } from 'src/app/product';
-import { ProductService } from 'src/app/product.service';
+import { ProductSuggestionsComponent } from 'src/app/product-suggestions/product-suggestions.component';
 import { ShoppingItem } from 'src/app/shopping-item';
 import { ShoppingItemService } from 'src/app/shopping-item.service';
 
@@ -22,7 +21,6 @@ export class AppComponent implements OnInit {
     private shoppingService: ShoppingItemService,
     private dialog: MatDialog,
     private storageService: LocalStorageService,
-    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
@@ -34,8 +32,15 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public showSuggestions(item: ShoppingItem): Product[] {
-    return this.productService.getProductsFor(item.getFoodId());
+  public showSuggestions(item: ShoppingItem): void {
+    const dialogRef = this.dialog.open(ProductSuggestionsComponent, {
+      width: '400px',
+      data: item
+    });
+    dialogRef.afterClosed().subscribe(product => {
+      item.attach(product);
+      this.save();
+    });
   }
 
   public addToCard(): void {
@@ -44,19 +49,23 @@ export class AppComponent implements OnInit {
     if (userText) {
       const shoppingItem = this.shoppingService.findBy(userText);
       if (shoppingItem) {
-        this.handleNewShoppingItem(shoppingItem);
+        this.handleNewRequest(shoppingItem);
       }
     }
-    this.storageService.storeItems(this.shoppingList);
+    this.save();
   }
 
-  private handleNewShoppingItem(shoppingItem: ShoppingItem): void {
+  private handleNewRequest(shoppingItem: ShoppingItem): void {
     const index = this.indexFor(shoppingItem);
     if (index < 0) {
       this.shoppingList.push(shoppingItem);
     } else {
-      this.shoppingList[index] = this.shoppingList[index].concat(shoppingItem);
+      this.shoppingList[index].concat(shoppingItem);
     }
+  }
+
+  private save(): void {
+    this.storageService.storeItems(this.shoppingList);
   }
 
   private indexFor(shoppingItem: ShoppingItem): number {
@@ -75,17 +84,17 @@ export class AppComponent implements OnInit {
           shoppingItem => shoppingItem !== givenItem
         );
       }
-      this.storageService.storeItems(this.shoppingList);
+      this.save();
     });
   }
 
   public increaseAmount(item: ShoppingItem): void {
     item.onePlus();
-    this.storageService.storeItems(this.shoppingList);
+    this.save();
   }
 
   public decreaseAmount(item: ShoppingItem): void {
     item.oneMinus();
-    this.storageService.storeItems(this.shoppingList);
+    this.save();
   }
 }
