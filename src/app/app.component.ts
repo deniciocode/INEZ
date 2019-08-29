@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ShoppingItemService } from 'src/app/shopping-item.service';
-import { ShoppingItem } from 'src/app/shopping-item';
-import {
-  DeleteConfirmationComponent
-} from 'src/app/delete-confirmation/delete-confirmation.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import {LocalStorageService} from 'src/app/local-storage.service';
+import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
+import { LocalStorageService } from 'src/app/local-storage.service';
+import { Product } from 'src/app/product';
+import { ProductService } from 'src/app/product.service';
+import { ShoppingItem } from 'src/app/shopping-item';
+import { ShoppingItemService } from 'src/app/shopping-item.service';
 
 @Component({
   selector: 'inez-root',
@@ -21,7 +21,8 @@ export class AppComponent implements OnInit {
     private fb: FormBuilder,
     private shoppingService: ShoppingItemService,
     private dialog: MatDialog,
-    private storageService: LocalStorageService
+    private storageService: LocalStorageService,
+    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +32,10 @@ export class AppComponent implements OnInit {
     if (localStorage.length > 0) {
       this.shoppingList = this.storageService.restoreFromLocalStorage();
     }
+  }
+
+  public showSuggestions(item: ShoppingItem): Product[] {
+    return this.productService.getProductsFor(item.getFoodId());
   }
 
   public addToCard(): void {

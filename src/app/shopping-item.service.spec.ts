@@ -1,5 +1,5 @@
 import { ShoppingItemService } from './shopping-item.service';
-import {ShoppingItem} from 'src/app/shopping-item';
+import { ShoppingItem } from 'src/app/shopping-item';
 
 describe('ShoppingItemService', () => {
   let service: ShoppingItemService;

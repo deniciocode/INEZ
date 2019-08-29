@@ -1,7 +1,5 @@
 <mat-toolbar color="primary">
-  <span>
-    INEZ - Mein Einkauf
-  </span>
+  <span> INEZ - Mein Einkauf </span>
 </mat-toolbar>
 
 <form [formGroup]='shoppingForm' (ngSubmit)='addToCard()' >
@@ -23,6 +21,12 @@
                     [checked]='item.getChecked()'>
         {{ item.toString() }}
       </mat-checkbox>
+    </span>
+
+    <span class='product-suggestions'>
+      <ul>
+        <li *ngFor='let product of showSuggestions(item)'>{{ product }}</li>
+      </ul>
     </span>
 
     <span class='item-actions' *ngIf='!item.getChecked()'>

@@ -4,19 +4,23 @@ export class ShoppingItem {
   private checked: boolean;
   private productAttached: boolean;
 
-  constructor(private amount: number, private food: Food) {
-    this.checked = false;
-    this.productAttached = false;
-  }
-
   static fromObject(shoppingItemObject: Object): ShoppingItem {
     const food = Food.fromObject(shoppingItemObject['food']);
     const amount = shoppingItemObject['amount'];
     return new ShoppingItem(amount, food);
   }
 
+  constructor(private amount: number, private food: Food) {
+    this.checked = false;
+    this.productAttached = false;
+  }
+
   public getAmount(): number {
     return this.amount;
+  }
+
+  public getFoodId(): number {
+    return this.food.getId();
   }
 
   public setChecked(checked: boolean): void {
@@ -43,6 +47,10 @@ export class ShoppingItem {
 
   public hasSameFood(otherItem: ShoppingItem): boolean {
     return this.getFoodDescription() === otherItem.getFoodDescription();
+  }
+
+  public hasProductAttached(): boolean {
+    return this.productAttached;
   }
 
   private getFoodDescription(): string {

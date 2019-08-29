@@ -1,4 +1,13 @@
 export class Food {
+  static fromObject(productObject: Object): Food {
+    return new Food(
+      productObject['id'],
+      productObject['describtion'],
+      productObject['messurement'],
+      productObject['synonyms']
+    )
+  }
+
   constructor(
     private id: number,
     private describtion: string,
@@ -13,17 +22,12 @@ export class Food {
     return `${this.messurement} ${this.describtion}`
   }
 
-  static fromObject(productObject: Object): Food {
-    return new Food(
-      productObject['id'],
-      productObject['describtion'],
-      productObject['messurement'],
-      productObject['synonyms']
-    )
-  }
-
   public getDescription(): string {
     return this.describtion;
+  }
+
+  public getId(): number {
+    return this.id;
   }
 
   public getSynonyms(): string[] {
