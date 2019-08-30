@@ -1,27 +1,53 @@
 # Inez
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.1.
+INEZ ist ein INtelligenter EinkaufZettel, der für den
+Wettbewerb von IT-Talents in Angular gebaut wurde. Die App ist in der Lage
+den Eingabewert eines Users auf vorhandene Produkte zu mappen.
 
-## Development server
+## Funktionsumfang
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Ein Benutzer gibt über das Inputfeld einen Kaufwunsch an. Der Wunsch kann ggf.
+eine Menge in der Form einer Zahl beinhalten. Das Programm untersucht den
+Eingabewert auf vorhandene Zahlen und nimmt die erste gefundene Zahl, um die
+Menge zu determinieren.
+Des Weiteren sucht das Programm das passende Lebensmittel, welches sich in der
+Eingabe des Benutzers befindet.
+Die Lebensmittel sind hart kodiert im Programm zu finden.
 
-## Code scaffolding
+Sollte ein Lebensmittel gefundene worden sein, so hat der Benutzer die
+Möglichkeit ein passendes Produkt auszuwählen. Das ausgewählte Produkt ersetzt
+die Beschreibung des Listeneintrages.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Jede Änderung an der Liste wird automatisch im LocalStorage des Browers
+gespeichert.
 
-## Build
+## Start Development server
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+- `npm install` installert alle notwendigen Pakete
+- `ng serve` for a dev server
+- Navigate to `http://localhost:4200/`. The app will automatically reload if
 
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Aufbau des Programms
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Der geschriebene Code befindes sich in `src/app`
+Das Programm besteht aus folden Teilen:
+- 3 Components
+    - `AppComponent` Haupkomponente für den Einkaufzettel
+    - `DeleteConfirmationComponent` Pop-up für die Löschbestätigung
+    - `ProductSuggestionsComponent` Pop-up für die Produktvorschläge
+- 3 Klassen
+    - `Food` Object um ein Lebensmittel dazustellen
+    - `Product` Object welches ein kaufbares Produkt abbildet
+    - `ShoppingItem` Listenelement im Einkaufzettel
+- 3 Servicen
+    - `LocalStorageService` LocalStorage-Verwaltung
+    - `ShoppingItemService` Transformiert Eingabetext zu `ShoppingItem`
+    - `ProductService` Findet die passendes Produkte auf basis von
+        Lebensmitteln
 
-## Further help
+Die UI wurde mit [Angular Material](https://material.angular.io/) umgesetzt.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
