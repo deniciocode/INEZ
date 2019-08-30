@@ -37,18 +37,12 @@ describe('ShoppingItem', () => {
   describe('#concat', () => {
     let otherShoppingItem: ShoppingItem;
 
-    it('should return a ShoppingItem', () => {
-      otherShoppingItem = new ShoppingItem(2, food)
-      expect(shoppingItem.concat(otherShoppingItem))
-        .toEqual(jasmine.any(ShoppingItem));
-    });
-
     describe('when foods are the same', () => {
       it('should concatinate the amount', () => {
         let newAmount = 3;
         let otherShoppingItem = new ShoppingItem(newAmount, food);
-        const resultItem = shoppingItem.concat(otherShoppingItem);
-        expect(resultItem.getAmount()).toEqual(newAmount + givenAmount);
+        shoppingItem.concat(otherShoppingItem);
+        expect(shoppingItem.getAmount()).toEqual(newAmount + givenAmount);
       });
     });
   });
